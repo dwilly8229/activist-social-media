@@ -1,0 +1,24 @@
+type PostContent = record {
+  text: text;
+  image: opt vec nat8;
+  donation: nat64;
+};
+
+type Post = record {
+  id: text;
+  handle: text;
+  timestamp: nat64;
+  content: PostContent;
+  nullifier_hash: text;
+};
+
+service : {
+  create_post: (text, text, opt vec nat8, text, text) -> (variant { Ok: text; Err: text });
+  get_posts: () -> (vec Post) query;
+  donate: (text, nat64) -> (variant { Ok: text; Err: text });
+  withdraw: (text, text, text) -> (variant { Ok: text; Err: text });
+  mint_nft: (principal) -> (variant { Ok: text; Err: text });
+  check_user_has_nft: (principal) -> (bool) query;
+  get_balance: (principal) -> (nat64) query;
+  get_balance_by_nullifier: (text) -> (nat64) query;
+};
